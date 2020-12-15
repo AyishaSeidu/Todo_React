@@ -1,0 +1,12 @@
+by default, filter (state variable) = All until user click on the specified filter
+
+user can add task without changing the filter
+
+what changes the display is the filter not the addition of new task
+
+on update of filter variable:
+
+	call filter function, reset list to whatever the filtered array is and rerender
+
+
+
