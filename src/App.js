@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import styled from "@emotion/styled";
+import NewTask from "./components/NewTask";
+import TodoList from "./components/TodoList";
 
 function App() {
   //create an empty array to hold all tasks
   const [tasks, setTasks] = useState([]);
-  const [item, setItem] = useState("");
   const [filter, setFilter] = useState("All");
+  
   //this array is what gets displayed depending on the filter
   const [list, setList] = useState([]);
 
@@ -14,18 +16,7 @@ function App() {
     filterList(filter);
   }, [filter, tasks]);
 
-  //function to add a new task to the array when an input is submitted
-  const addTask = (tsk) => {
-    setTasks([
-      ...tasks,
-      {
-        id: tasks.length,
-        task: tsk,
-        status: "Active",
-      },
-    ]);
-  };
-
+  //filtering the list of items to be displayed
   const filterList = (filter) => {
     if (filter === "All") {
       setList([...tasks]);
@@ -37,6 +28,30 @@ function App() {
       setList(f);
     }
   };
+
+  //changing task status on double click
+  const changeEditStatus = (itm) =>{
+    let id = itm.id;
+
+    let stat = false;
+  
+      let newItem = { id: itm.id, task: itm.task, status: itm.status, readOnlyStatus: stat };
+      //replace the item with the new one created
+      tasks.splice(id, 1, newItem);
+      setTasks([...tasks]);
+
+};
+
+//editTask
+const updateTask = (itm,updatedTask) => {
+  let id = itm.id;
+  
+  let newItem = { id: itm.id, task: updatedTask, status: itm.status, readOnlyStatus: itm.itm.readOnlyStatus };
+  //replace the item with the new one created
+  tasks.splice(id, 1, newItem);
+  setTasks([...tasks]);
+};
+
   //changing task status
   const changeStatus = (itm) => {
     let stat = "";
@@ -70,27 +85,9 @@ function App() {
       <Canvas>
         <div className="App">
           <TittleContainer>todos</TittleContainer>
-          <div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                addTask(item);
-                document.getElementById("taskInput").value = "";
-              }}
-            >
-              <InputField
-                id="taskInput"
-                placeholder="What needs to be done?"
-                onChange={(e) => {
-                  e.preventDefault();
-                  setItem(e.target.value);
-                }}
-                type="text"
-              ></InputField>
-            </form>
-          </div>
+<NewTask tasks={tasks} setTasks={setTasks}/>
         </div>
-      </Canvas>
+      </Canvas> 
     );
   } else {
     return (
@@ -98,51 +95,31 @@ function App() {
         <div className="App">
           <TittleContainer>todos</TittleContainer>
           <div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                addTask(item);
-                document.getElementById("taskInput").value = "";
-              }}
-            >
-              <InputField
-                id="taskInput"
-                placeholder="What needs to be done?"
-                onChange={(e) => {
-                  e.preventDefault();
-                  setItem(e.target.value);
-                }}
-                type="text"
-              ></InputField>
-            </form>
+          <NewTask tasks={tasks} setTasks={setTasks}/>
 
-            <ListItem>
-              {list.map((item) => (
-                <li key={item?.id}>
-                  <Checkmark
-                    type="checkbox"
-                    onClick={() => changeStatus(item)}
-                  />
-                  <Task
-                    id={`item${item?.id}`}
-                    value={item?.task}
-                    readOnly={true}
-                    onDoubleClick={() =>
-                      (document.getElementById(
-                        `item${item?.id}`
-                      ).readOnly = false)
-                    }
-                  ></Task>
-                </li>
-              ))}
-            </ListItem>
-            <FooterItem>
+          <ListItem>
+        {list.map((item) => (
+          <li key={item?.id}>
+            <Checkmark
+              type="checkbox"
+              onClick={() => changeStatus(item)}
+            />
+            <Task
+              id={item?.id}
+            >{item?.task}</Task>
+       
+          </li>
+        ))}
+        
+      </ListItem>
+            <Footer>
+            <ItemsLeft>
               {` ${
                 tasks.filter((item) => {
                   return item.status === "Active";
                 }).length
               } Item(s) Left `}
-            </FooterItem>
+            </ItemsLeft>
 
             <FilterItem
               onClick={() => {
@@ -165,13 +142,14 @@ function App() {
             >
               Completed
             </FilterItem>
-            <FooterItem
+            <RemoveCompleted
               onClick={() => {
                 clearCompleted();
               }}
             >
               Clear Completed
-            </FooterItem>
+            </RemoveCompleted>
+            </Footer>
           </div>
         </div>
       </Canvas>
@@ -181,34 +159,65 @@ function App() {
 
 export default App;
 
-//Formatting
+//CSS
 const TittleContainer = styled.div`
   color: rgba(175, 47, 47, 0.25);
   top: -10px;
   width: 100%;
-  font-size: 110px;
-  font-weight: 400;
+  font-size: 90px;
+  font-weight: 500;
   text-align: center;
 `;
 
 const Canvas = styled.div`
   width: 500px;
-  background-color: rgba(30, 30, 30, 0.03);
-  box-shadow: 2px 2px grey;
+ // box-shadow: 2px 2px grey;
+  position: absolute;
+  top: 20%;
+  bottom: 20%;
+  left: 30%;
+  right: 50%;
+  margin: -25px 0 0 -25px
+  backgroud-color: white;
 `;
 const InputField = styled.input`
-  top: -10px;
-  border-style: none;
+  top: 10px;
+ // border: 1px solid #ffffff;
+  //box-shadow: 0.5px grey;
+  line-height: 1.4em;
+  border-color: white;
+  outline: none;
+  margin: 0;
   font-size: 30px;
   top: 100px;
+  border: none;
+  box-shadow: inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
+  box-sizing: border-box;
+  width: 100%;
 `;
 
-const FooterItem = styled.span`
-  margin-left: 10px;
+const ItemsLeft = styled.span`
+  padding-left: -5px;;
+  margin-right: 20px;
+  cursor: pointer;
+`;
+
+const RemoveCompleted = styled.span`
+  margin-left: 20px;
+  margin-right: 40px;
+  background-color: lightblue;
+  cursor: pointer;
 `;
 
 const FilterItem = styled.span`
-  margin-left: 10px;
+  margin-left: 20px;
+  background-color: lightblue;
+  cursor: pointer;
+
+`;
+
+const Footer = styled.div`
+width: 100%;
 `;
 const ListItem = styled.ul`
   //text-decoration: line-through;
@@ -216,14 +225,32 @@ const ListItem = styled.ul`
   list-style-type: none;
 `;
 
-const Task = styled.input`
-  font-size: 30px;
+const Task = styled.div`
+  text-align: left
+  font-size: 25px;
+  border-style: solid;
+  border-width: 0px 0px 0.5px 0px;
+  //border-color: grey;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
+  box-sizing: border-box;
+  top: 30px;
+`;
+
+const EditableTask = styled.input`
+  font-size: 25px;
   border-style: solid;
   border-width: 0px 0px 0.5px 0px;
   border-color: grey;
+  width: 100%;
+  box-shadow: inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
+  box-sizing: border-box;
+  top: 30px;
 `;
 
 const Checkmark = styled.input`
+  float: left;
   border-width: 2px;
   border-color: rgba(50, 50, 50, 0.7)
   border-radius: 5px;
@@ -231,3 +258,5 @@ const Checkmark = styled.input`
   border-width: 0px 0px 0.5px 0px;
   border-color: grey;
 `;
+
+
