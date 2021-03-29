@@ -12,15 +12,14 @@ const NewTask = (props) => {
           {
             id: tasks.length,
             task: tsk,
-            status: "Active",
-            readOnly: true,
+            isCompleted: false,
+            edit: false,
           },
         ]);
       };
 
     return ( 
 
-        <div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -38,23 +37,28 @@ const NewTask = (props) => {
             type="text"
           ></InputField>
         </form>
-      </div>
      );
 }
  
 export default NewTask;
 
 const InputField = styled.input`
-  top: 10px;
- // border: 1px solid #ffffff;
-  //box-shadow: 0.5px grey;
-  line-height: 1.4em;
-  border-color: white
+ line-height: 1.4em;
   margin: 0;
   font-size: 30px;
+  background-color: white;
   top: 100px;
-  border: 1px solid #999;
-  box-shadow: inset 0 -1px 5px 0 rgb(0 0 0 / 20%);
+  border: 1px solid white;
   box-sizing: border-box;
-  width: 100%;
+  width: 80%;
+  &::placeholder {
+    font-size: 25px;
+    font-style: italic;
+    color: grey;
+    backgound: white;
+    opacity: 0.3;
+  }
+  &:focus {
+    outline: none;
+  }
 `;
