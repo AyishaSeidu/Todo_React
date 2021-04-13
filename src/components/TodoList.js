@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
+import {css} from "@emotion/react";
 
 const TodoList = (props) => {
   const { tasks, setTasks } = props;
@@ -152,7 +153,7 @@ const Checkmark = styled.div`
   & :checked {
     background-color: grey;
   }
-  ${({ compStatus }) => compStatus && `
+  ${({ compStatus }) => compStatus && css`
   border-color: green;
     &:after {
       content: '\\2713';
