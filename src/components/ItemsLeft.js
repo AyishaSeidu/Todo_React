@@ -26,5 +26,4 @@ const Container = styled.span`
   margin-right: 20px;
   cursor: context-menu;
   color: grey;
-  
 `;

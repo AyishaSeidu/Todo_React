@@ -4,20 +4,19 @@ import styled from "@emotion/styled";
 const Filter = (props) => {
 const {setFilter} = props;
 const [allBorder, setAllBorder] = useState("rgba(175, 45, 45, 0.3)");
-const [activeBorder, setActiveBorder] = useState("white");
-const [completedBorder, setCompltedBorder] = useState("white");
+const [activeBorder, setActiveBorder] = useState("none");
+const [completedBorder, setCompltedBorder] = useState("none");
 
 //styling
 const All = styled.span`
   margin-left: 20px;
- // margin: 3px;
   border: 0.5px solid transparent;
   border-radius: 3px;
   cursor: pointer;
   color: grey;
   border-color: ${allBorder};
   padding: 0px 5px;
-  &: hover {
+  &:hover {
     border: 0.5px solid transparent;
     border-radius: 3px;
     border-color: ${allBorder};
@@ -26,8 +25,7 @@ const All = styled.span`
 
 const Active = styled.span`
  margin-left: 20px;
- // margin: 3px;
-  border: 1px solid transparent;
+   border: 1px solid transparent;
   border-radius: 3px;
   cursor: pointer;
   color: grey;
@@ -37,9 +35,6 @@ const Active = styled.span`
 
 const Completed = styled.span`
   margin-left: 20px;
- // margin: 3px;
-  // padding: 3px 7px;
-  // text-decoration: none;
   border: 1px solid transparent;
   border-radius: 3px;
   cursor: pointer;
@@ -57,8 +52,8 @@ const Completed = styled.span`
                 onClick={() => {
                   setFilter("All");
                   setAllBorder("rgba(175, 45, 45, 0.3)");
-                  setActiveBorder("white");
-                  setCompltedBorder("white");
+                  setActiveBorder("none");
+                  setCompltedBorder("none");
                 }}
               >
                 All
@@ -66,9 +61,9 @@ const Completed = styled.span`
               <Active
                 onClick={() => {
                   setFilter(false);
-                  setAllBorder("white");
+                  setAllBorder("none");
                   setActiveBorder("rgba(175, 45, 45, 0.3)");
-                  setCompltedBorder("white");
+                  setCompltedBorder("none");
                 }}
               >
                 Active
@@ -76,8 +71,8 @@ const Completed = styled.span`
               <Completed
                 onClick={() => {
                   setFilter(true);
-                  setAllBorder("white");
-                  setActiveBorder("white");
+                  setAllBorder("none");
+                  setActiveBorder("none");
                   setCompltedBorder("rgba(175, 45, 45, 0.3)");
                 }}
               >
@@ -89,7 +84,3 @@ const Completed = styled.span`
 }
  
 export default Filter;
-
-const FilterContainer = styled.span`
-
-`;

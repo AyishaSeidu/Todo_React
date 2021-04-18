@@ -28,6 +28,7 @@ const NewTask = (props) => {
           }}
         >
           <InputField
+          autoComplete='off' 
             id="taskInput"
             placeholder="What needs to be done?"
             onChange={(e) => {
@@ -43,20 +44,28 @@ const NewTask = (props) => {
 export default NewTask;
 
 const InputField = styled.input`
- line-height: 1.4em;
-  margin: 0;
-  font-size: 30px;
+  line-height: 2em;
+  margin-left: 15px;
+  font-size: 25px;
   background-color: white;
   top: 100px;
   border: 1px solid white;
   box-sizing: border-box;
-  width: 80%;
+  width: 100%;
+  /* @media (max-width: 480px) {
+  font-size: 15px;
+  //width: 50%;
+} */
   &::placeholder {
-    font-size: 25px;
+    font-size: 24px;
     font-style: italic;
     color: grey;
-    backgound: white;
+    width: 100%;
     opacity: 0.3;
+  /* @media (max-width: 480px) {
+  font-size: 15px;
+  width: 50%;
+} */
   }
   &:focus {
     outline: none;

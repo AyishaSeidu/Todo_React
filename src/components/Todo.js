@@ -39,7 +39,7 @@ function Todo() {
         <Canvas>
           <NewTask tasks={tasks} setTasks={setTasks} />
         </Canvas>
-      </div>
+        </div>
     );
   } else {
     return (
@@ -72,6 +72,10 @@ const TittleContainer = styled.div`
   font-weight: 500;
   text-align: center;
   opacity: 0.7;
+
+  /* @media (max-width: 480px) {
+  font-size: 30px;
+  } */
 `;
 
 const Canvas = styled.div`
@@ -79,6 +83,12 @@ const Canvas = styled.div`
   max-width: 550px;
   margin: 0 auto;
   background: white;
+  /* @media (max-width: 480px) {
+  font-size: 16px;
+  min-width: 100px;
+  max-width: 300px;
+
+} */
 `;
 
 const InputandToggle = styled.div`

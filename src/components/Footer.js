@@ -12,7 +12,7 @@ const Footer = (props) => {
 
           <FooterContainer>
           <ItemsLeft tasks={tasks}/>
-          <Filter /*filter ={filter} */ setFilter={setFilter}/>
+          <Filter setFilter={setFilter}/>
           <ClearCompleted tasks={tasks} setTasks={setTasks}/>
           </FooterContainer>
 
@@ -23,7 +23,9 @@ export default Footer;
 
 const FooterContainer = styled.div`
 margin-top: 20px;
-//width: 100%;
 align-items: center;
 height: 30px;
+@media (max-width: 500px) {
+  font-size: 13px;
+ }
 `;

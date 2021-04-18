@@ -30,11 +30,9 @@ export default ClearCompleted;
 
 const RemoveCompleted = styled.span`
   margin-left: 20px;
-  margin-right: 40px;
- // background-color: lightblue;
   cursor: pointer;
   color: grey;
-  &: hover {
+  &:hover {
   text-decoration: underline;
   } 
 `;
