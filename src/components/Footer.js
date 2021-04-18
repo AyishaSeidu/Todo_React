@@ -26,6 +26,6 @@ margin-top: 20px;
 align-items: center;
 height: 30px;
 @media (max-width: 500px) {
-  font-size: 13px;
+  font-size: 12px;
  }
 `;
